@@ -2,6 +2,8 @@
 #define MOTOR_B_SPD 11  //모터B의 속력을 결정하는 핀
 #define MOTOR_A_DIR 12  //모터A의 방향을 결정하는 핀
 #define MOTOR_B_DIR 13  //모터B의 방향을 결정하는 핀
+#define A_BAL 1   //모터A 속력 균형 계수 기본값 1
+#define B_BAL 1   //모터B 속력 균형 계수 기본값 1
 
 unsigned char m_a_spd = 0, m_b_spd = 0; //모터의 속력을 결정하는 전역변수
 boolean m_a_dir = 0, m_b_dir = 0; //모터의 방향을 결정하는 전역변수
@@ -32,35 +34,35 @@ void rc_ctrl_val(unsigned char cmd) //입력된 데이터에 따라 모터에 �
 {
   if(cmd == 'w')  //'w'가 입력되었을 때, 전진
   {
-    m_a_dir = 0;  //모터A 정방향
+    m_a_dir = 1;  //모터A 정방향
     m_b_dir = 0;  //모터B 정방향
-    m_a_spd = 128;  //모터A의 128의 PWM
-    m_b_spd = 128;  //모터B의 128의 PWM
+    m_a_spd = 128*A_BAL;  //모터A의 128의 PWM
+    m_b_spd = 128*B_BAL;  //모터B의 128의 PWM
   }
   else if(cmd == 'a')  //'a'가 입력되었을 때, 제자리 좌회전
   {
-    m_a_dir = 0;  //모터A 정방향
+    m_a_dir = 1;  //모터A 정방향
     m_b_dir = 1;  //모터B 역방향
-    m_a_spd = 128;  //모터A의 128의 PWM
-    m_b_spd = 128;  //모터B의 128의 PWM
+    m_a_spd = 128*A_BAL;  //모터A의 128의 PWM
+    m_b_spd = 128*B_BAL;  //모터B의 128의 PWM
   }
   else if(cmd == 'd')  //'d'가 입력되었을 때, 제자리 우회전
   {
-    m_a_dir = 1;  //모터A 역방향
+    m_a_dir = 0;  //모터A 역방향
     m_b_dir = 0;  //모터B 정방향
-    m_a_spd = 128;  //모터A의 128의 PWM
-    m_b_spd = 128;  //모터B의 128의 PWM
+    m_a_spd = 128*A_BAL;  //모터A의 128의 PWM
+    m_b_spd = 128*B_BAL;  //모터B의 128의 PWM
   }
   else if(cmd == 's')  //'s'가 입력되었을 때, 후진
   {
-    m_a_dir = 1;  //모터A 역방향
+    m_a_dir = 0;  //모터A 역방향
     m_b_dir = 1;  //모터B 역방향
-    m_a_spd = 128;  //모터A의 128의 PWM
-    m_b_spd = 128;  //모터B의 128의 PWM
+    m_a_spd = 128*A_BAL;  //모터A의 128의 PWM
+    m_b_spd = 128*B_BAL;  //모터B의 128의 PWM
   }
   else if(cmd == 'x')
   {
-    m_a_dir = 0;  //모터A 정방향
+    m_a_dir = 1;  //모터A 정방향
     m_b_dir = 0;  //모터B 정방향
     m_a_spd = 0;  //모터A의 정지
     m_b_spd = 0;  //모터B의 정지
